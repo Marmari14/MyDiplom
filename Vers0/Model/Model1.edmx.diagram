@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f2db46c1a83546d79d684154fed64b58" Name="Diagram1">
+        <EntityTypeShape EntityType="inventory_managementModel.contractor" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="inventory_managementModel.logs" Width="1.5" PointX="8" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="inventory_managementModel.orders" Width="1.5" PointX="3" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="inventory_managementModel.product" Width="1.5" PointX="3" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="inventory_managementModel.products_in_order" Width="1.5" PointX="5.25" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="inventory_managementModel.user_action" Width="1.5" PointX="5.75" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="inventory_managementModel.users" Width="1.5" PointX="5.75" PointY="8.875" IsExpanded="true" />
+        <AssociationConnector Association="inventory_managementModel.FK__orders__contract__2A4B4B5E" ManuallyRouted="false" />
+        <AssociationConnector Association="inventory_managementModel.FK__logs__type_actio__3D5E1FD2" ManuallyRouted="false" />
+        <AssociationConnector Association="inventory_managementModel.FK__logs__username__3C69FB99" ManuallyRouted="false" />
+        <AssociationConnector Association="inventory_managementModel.FK__products___order__2D27B809" ManuallyRouted="false" />
+        <AssociationConnector Association="inventory_managementModel.FK__products___produ__2E1BDC42" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

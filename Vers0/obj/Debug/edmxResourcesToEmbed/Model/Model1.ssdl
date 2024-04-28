@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище inventory_managementModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="contractor">
+    <Key>
+      <PropertyRef Name="INN" />
+    </Key>
+    <Property Name="INN" Type="nvarchar" MaxLength="12" Nullable="false" />
+    <Property Name="type_contractor" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="address_contractor" Type="nvarchar" MaxLength="70" Nullable="false" />
+    <Property Name="RCBIC" Type="nvarchar" MaxLength="9" Nullable="false" />
+    <Property Name="bank" Type="nvarchar" MaxLength="60" Nullable="false" />
+    <Property Name="corr_acc" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="acc" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="designation_contractor" Type="nvarchar" MaxLength="30" />
+    <Property Name="KPP" Type="nvarchar" MaxLength="9" />
+    <Property Name="OGRN" Type="nvarchar" MaxLength="13" />
+    <Property Name="surname" Type="nvarchar" MaxLength="30" />
+    <Property Name="name_contractor" Type="nvarchar" MaxLength="30" />
+    <Property Name="middle_name" Type="nvarchar" MaxLength="30" />
+    <Property Name="date_birth" Type="date" />
+    <Property Name="OGRNIP" Type="nvarchar" MaxLength="15" />
+  </EntityType>
+  <EntityType Name="logs">
+    <Key>
+      <PropertyRef Name="number" />
+    </Key>
+    <Property Name="number" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="username" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="date_action" Type="date" Nullable="false" />
+    <Property Name="type_action" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="orders">
+    <Key>
+      <PropertyRef Name="number" />
+    </Key>
+    <Property Name="number" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="order_type" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="order_date" Type="date" Nullable="false" />
+    <Property Name="contractor" Type="nvarchar" MaxLength="12" Nullable="false" />
+    <Property Name="amount" Type="float" />
+    <Property Name="order_status" Type="nvarchar" MaxLength="11" Nullable="false" />
+  </EntityType>
+  <EntityType Name="product">
+    <Key>
+      <PropertyRef Name="number" />
+    </Key>
+    <Property Name="number" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="article" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="name_product" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="unit_of_measurement" Type="nvarchar" MaxLength="3" Nullable="false" />
+    <Property Name="sale_price" Type="money" Nullable="false" />
+    <Property Name="minimum_balance" Type="int" Nullable="false" />
+    <Property Name="description_product" Type="nvarchar" MaxLength="70" />
+    <Property Name="Shelf_life" Type="int" />
+    <Property Name="season" Type="nvarchar" MaxLength="5" />
+    <Property Name="photo" Type="image" />
+  </EntityType>
+  <EntityType Name="products_in_order">
+    <Key>
+      <PropertyRef Name="number" />
+    </Key>
+    <Property Name="number" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="order_number" Type="int" Nullable="false" />
+    <Property Name="product_number" Type="int" Nullable="false" />
+    <Property Name="quantity" Type="int" Nullable="false" />
+    <Property Name="price" Type="float" Nullable="false" />
+    <Property Name="amount" Type="float" StoreGeneratedPattern="Computed" Nullable="false" />
+  </EntityType>
+  <EntityType Name="user_action">
+    <Key>
+      <PropertyRef Name="number" />
+    </Key>
+    <Property Name="number" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="action_name" Type="nvarchar" MaxLength="30" Nullable="false" />
+  </EntityType>
+  <EntityType Name="users">
+    <Key>
+      <PropertyRef Name="username" />
+    </Key>
+    <Property Name="username" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="password" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="surname" Type="nvarchar" MaxLength="30" />
+    <Property Name="name_user" Type="nvarchar" MaxLength="30" />
+    <Property Name="middle_name" Type="nvarchar" MaxLength="30" />
+    <Property Name="is_admin" Type="bit" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__logs__type_actio__3D5E1FD2">
+    <End Role="user_action" Type="Self.user_action" Multiplicity="1" />
+    <End Role="logs" Type="Self.logs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user_action">
+        <PropertyRef Name="number" />
+      </Principal>
+      <Dependent Role="logs">
+        <PropertyRef Name="type_action" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__logs__username__3C69FB99">
+    <End Role="users" Type="Self.users" Multiplicity="1" />
+    <End Role="logs" Type="Self.logs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="username" />
+      </Principal>
+      <Dependent Role="logs">
+        <PropertyRef Name="username" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__orders__contract__2A4B4B5E">
+    <End Role="contractor" Type="Self.contractor" Multiplicity="1" />
+    <End Role="orders" Type="Self.orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="contractor">
+        <PropertyRef Name="INN" />
+      </Principal>
+      <Dependent Role="orders">
+        <PropertyRef Name="contractor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__products___order__2D27B809">
+    <End Role="orders" Type="Self.orders" Multiplicity="1" />
+    <End Role="products_in_order" Type="Self.products_in_order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="orders">
+        <PropertyRef Name="number" />
+      </Principal>
+      <Dependent Role="products_in_order">
+        <PropertyRef Name="order_number" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__products___produ__2E1BDC42">
+    <End Role="product" Type="Self.product" Multiplicity="1" />
+    <End Role="products_in_order" Type="Self.products_in_order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="product">
+        <PropertyRef Name="number" />
+      </Principal>
+      <Dependent Role="products_in_order">
+        <PropertyRef Name="product_number" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="create_password" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar">
+    <Parameter Name="username" Type="nvarchar" Mode="In" />
+    <Parameter Name="password" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="user_authorization" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="bit">
+    <Parameter Name="username" Type="nvarchar" Mode="In" />
+    <Parameter Name="password" Type="nvarchar" Mode="In" />
+  </Function>
+  <EntityContainer Name="Хранилище inventory_managementModelContainer">
+    <EntitySet Name="contractor" EntityType="Self.contractor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="logs" EntityType="Self.logs" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="orders" EntityType="Self.orders" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="product" EntityType="Self.product" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="products_in_order" EntityType="Self.products_in_order" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="user_action" EntityType="Self.user_action" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__logs__type_actio__3D5E1FD2" Association="Self.FK__logs__type_actio__3D5E1FD2">
+      <End Role="user_action" EntitySet="user_action" />
+      <End Role="logs" EntitySet="logs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__logs__username__3C69FB99" Association="Self.FK__logs__username__3C69FB99">
+      <End Role="users" EntitySet="users" />
+      <End Role="logs" EntitySet="logs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__orders__contract__2A4B4B5E" Association="Self.FK__orders__contract__2A4B4B5E">
+      <End Role="contractor" EntitySet="contractor" />
+      <End Role="orders" EntitySet="orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__products___order__2D27B809" Association="Self.FK__products___order__2D27B809">
+      <End Role="orders" EntitySet="orders" />
+      <End Role="products_in_order" EntitySet="products_in_order" />
+    </AssociationSet>
+    <AssociationSet Name="FK__products___produ__2E1BDC42" Association="Self.FK__products___produ__2E1BDC42">
+      <End Role="product" EntitySet="product" />
+      <End Role="products_in_order" EntitySet="products_in_order" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
