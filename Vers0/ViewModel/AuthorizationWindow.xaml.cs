@@ -24,5 +24,6 @@ namespace Vers0.ViewModel
             InitializeComponent();
             DataContext = new AuthorizationViewModel(this);
         }
+
     }
 }

@@ -35,6 +35,7 @@ namespace Vers0.Model
         public string middle_name { get; set; }
         public Nullable<System.DateTime> date_birth { get; set; }
         public string OGRNIP { get; set; }
+        public bool deleted { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<orders> orders { get; set; }

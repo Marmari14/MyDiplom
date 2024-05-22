@@ -26,6 +26,7 @@ namespace Vers0.Model
         public string name_user { get; set; }
         public string middle_name { get; set; }
         public bool is_admin { get; set; }
+        public bool deleted { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<logs> logs { get; set; }

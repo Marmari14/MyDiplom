@@ -23,3 +23,7 @@ C:\Users\User\Desktop\учёба\4 курс\ДИПЛОМ\Vers0\obj\Debug\MainWin
 C:\Users\User\Desktop\учёба\4 курс\ДИПЛОМ\Vers0\obj\Debug\ViewModel\AuthorizationWindow.g.cs
 C:\Users\User\Desktop\учёба\4 курс\ДИПЛОМ\Vers0\obj\Debug\ViewModel\AuthorizationWindow.baml
 C:\Users\User\Desktop\учёба\4 курс\ДИПЛОМ\Vers0\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\User\Desktop\учёба\4 курс\ДИПЛОМ\Vers0\obj\Debug\OrderWindow.g.cs
+C:\Users\User\Desktop\учёба\4 курс\ДИПЛОМ\Vers0\obj\Debug\OrderWindow.baml
+C:\Users\User\Desktop\учёба\4 курс\ДИПЛОМ\Vers0\obj\Debug\AddProductWindow.g.cs
+C:\Users\User\Desktop\учёба\4 курс\ДИПЛОМ\Vers0\obj\Debug\AddProductWindow.baml

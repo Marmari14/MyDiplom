@@ -19,6 +19,7 @@
           <ScalarProperty Name="middle_name" ColumnName="middle_name" />
           <ScalarProperty Name="date_birth" ColumnName="date_birth" />
           <ScalarProperty Name="OGRNIP" ColumnName="OGRNIP" />
+          <ScalarProperty Name="deleted" ColumnName="deleted" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -41,6 +42,7 @@
           <ScalarProperty Name="contractor" ColumnName="contractor" />
           <ScalarProperty Name="amount" ColumnName="amount" />
           <ScalarProperty Name="order_status" ColumnName="order_status" />
+          <ScalarProperty Name="deleted" ColumnName="deleted" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -53,10 +55,11 @@
           <ScalarProperty Name="unit_of_measurement" ColumnName="unit_of_measurement" />
           <ScalarProperty Name="sale_price" ColumnName="sale_price" />
           <ScalarProperty Name="minimum_balance" ColumnName="minimum_balance" />
+          <ScalarProperty Name="count" ColumnName="count" />
           <ScalarProperty Name="description_product" ColumnName="description_product" />
           <ScalarProperty Name="Shelf_life" ColumnName="Shelf_life" />
           <ScalarProperty Name="season" ColumnName="season" />
-          <ScalarProperty Name="photo" ColumnName="photo" />
+          <ScalarProperty Name="deleted" ColumnName="deleted" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -89,8 +92,35 @@
           <ScalarProperty Name="name_user" ColumnName="name_user" />
           <ScalarProperty Name="middle_name" ColumnName="middle_name" />
           <ScalarProperty Name="is_admin" ColumnName="is_admin" />
+          <ScalarProperty Name="deleted" ColumnName="deleted" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <FunctionImportMapping FunctionName="Хранилище inventory_managementModel.balances" FunctionImportName="balances">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="inventory_managementModel.balances_Result">
+          <ScalarProperty Name="article" ColumnName="article" />
+          <ScalarProperty Name="name_product" ColumnName="name_product" />
+          <ScalarProperty Name="count" ColumnName="count" />
+          <ScalarProperty Name="minimum_balance" ColumnName="minimum_balance" />
+          <ScalarProperty Name="ordered" ColumnName="ordered" />
+          <ScalarProperty Name="to_order" ColumnName="to_order" />
+          <ScalarProperty Name="date_of_debiting" ColumnName="date_of_debiting" />
+          <ScalarProperty Name="for_debiting" ColumnName="for_debiting" />
+          <ScalarProperty Name="season" ColumnName="season" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionName="Хранилище inventory_managementModel.GetProfitDataForPeriod" FunctionImportName="GetProfitDataForPeriod">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="inventory_managementModel.GetProfitDataForPeriod_Result">
+          <ScalarProperty Name="name_product" ColumnName="name_product" />
+          <ScalarProperty Name="article" ColumnName="article" />
+          <ScalarProperty Name="purchase_amount" ColumnName="purchase_amount" />
+          <ScalarProperty Name="sale_amount" ColumnName="sale_amount" />
+          <ScalarProperty Name="profit" ColumnName="profit" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

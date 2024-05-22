@@ -12,8 +12,9 @@ namespace Vers0.Model
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    using System.Data.SqlClient;
+    using System.Data.Entity.Core.Objects;
     using System.Linq;
+    using System.Data.SqlClient;
 
     public partial class inventory_managementEntities : DbContext
     {
@@ -34,6 +35,27 @@ namespace Vers0.Model
         public virtual DbSet<products_in_order> products_in_order { get; set; }
         public virtual DbSet<user_action> user_action { get; set; }
         public virtual DbSet<users> users { get; set; }
+    
+        [DbFunction("inventory_managementEntities", "balances")]
+        public virtual IQueryable<balances_Result> balances()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<balances_Result>("[inventory_managementEntities].[balances]()");
+        }
+    
+        [DbFunction("inventory_managementEntities", "GetProfitDataForPeriod")]
+        public virtual IQueryable<GetProfitDataForPeriod_Result> GetProfitDataForPeriod(Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
+        {
+            var startDateParameter = startDate.HasValue ?
+                new ObjectParameter("StartDate", startDate) :
+                new ObjectParameter("StartDate", typeof(System.DateTime));
+    
+            var endDateParameter = endDate.HasValue ?
+                new ObjectParameter("EndDate", endDate) :
+                new ObjectParameter("EndDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GetProfitDataForPeriod_Result>("[inventory_managementEntities].[GetProfitDataForPeriod](@StartDate, @EndDate)", startDateParameter, endDateParameter);
+        }
+
         public virtual bool UserAuthorization(string username, string password)
         {
             var result = Database.SqlQuery<bool>("SELECT dbo.user_authorization(@username, @password)",

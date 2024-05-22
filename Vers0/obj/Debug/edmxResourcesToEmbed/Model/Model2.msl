@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище inventory_managementModel1Container" CdmEntityContainer="inventory_managementEntities1">
+    <EntitySetMapping Name="contractor">
+      <EntityTypeMapping TypeName="inventory_managementModel1.contractor">
+        <MappingFragment StoreEntitySet="contractor">
+          <ScalarProperty Name="INN" ColumnName="INN" />
+          <ScalarProperty Name="type_contractor" ColumnName="type_contractor" />
+          <ScalarProperty Name="address_contractor" ColumnName="address_contractor" />
+          <ScalarProperty Name="RCBIC" ColumnName="RCBIC" />
+          <ScalarProperty Name="bank" ColumnName="bank" />
+          <ScalarProperty Name="corr_acc" ColumnName="corr_acc" />
+          <ScalarProperty Name="acc" ColumnName="acc" />
+          <ScalarProperty Name="designation_contractor" ColumnName="designation_contractor" />
+          <ScalarProperty Name="KPP" ColumnName="KPP" />
+          <ScalarProperty Name="OGRN" ColumnName="OGRN" />
+          <ScalarProperty Name="surname" ColumnName="surname" />
+          <ScalarProperty Name="name_contractor" ColumnName="name_contractor" />
+          <ScalarProperty Name="middle_name" ColumnName="middle_name" />
+          <ScalarProperty Name="date_birth" ColumnName="date_birth" />
+          <ScalarProperty Name="OGRNIP" ColumnName="OGRNIP" />
+          <ScalarProperty Name="deleted" ColumnName="deleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="logs">
+      <EntityTypeMapping TypeName="inventory_managementModel1.logs">
+        <MappingFragment StoreEntitySet="logs">
+          <ScalarProperty Name="number" ColumnName="number" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="date_action" ColumnName="date_action" />
+          <ScalarProperty Name="type_action" ColumnName="type_action" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="orders">
+      <EntityTypeMapping TypeName="inventory_managementModel1.orders">
+        <MappingFragment StoreEntitySet="orders">
+          <ScalarProperty Name="number" ColumnName="number" />
+          <ScalarProperty Name="order_type" ColumnName="order_type" />
+          <ScalarProperty Name="order_date" ColumnName="order_date" />
+          <ScalarProperty Name="contractor" ColumnName="contractor" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="order_status" ColumnName="order_status" />
+          <ScalarProperty Name="deleted" ColumnName="deleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="product">
+      <EntityTypeMapping TypeName="inventory_managementModel1.product">
+        <MappingFragment StoreEntitySet="product">
+          <ScalarProperty Name="number" ColumnName="number" />
+          <ScalarProperty Name="article" ColumnName="article" />
+          <ScalarProperty Name="name_product" ColumnName="name_product" />
+          <ScalarProperty Name="unit_of_measurement" ColumnName="unit_of_measurement" />
+          <ScalarProperty Name="sale_price" ColumnName="sale_price" />
+          <ScalarProperty Name="minimum_balance" ColumnName="minimum_balance" />
+          <ScalarProperty Name="count" ColumnName="count" />
+          <ScalarProperty Name="description_product" ColumnName="description_product" />
+          <ScalarProperty Name="Shelf_life" ColumnName="Shelf_life" />
+          <ScalarProperty Name="season" ColumnName="season" />
+          <ScalarProperty Name="photo" ColumnName="photo" />
+          <ScalarProperty Name="deleted" ColumnName="deleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="products_in_order">
+      <EntityTypeMapping TypeName="inventory_managementModel1.products_in_order">
+        <MappingFragment StoreEntitySet="products_in_order">
+          <ScalarProperty Name="number" ColumnName="number" />
+          <ScalarProperty Name="order_number" ColumnName="order_number" />
+          <ScalarProperty Name="product_number" ColumnName="product_number" />
+          <ScalarProperty Name="quantity" ColumnName="quantity" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="user_action">
+      <EntityTypeMapping TypeName="inventory_managementModel1.user_action">
+        <MappingFragment StoreEntitySet="user_action">
+          <ScalarProperty Name="number" ColumnName="number" />
+          <ScalarProperty Name="action_name" ColumnName="action_name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="users">
+      <EntityTypeMapping TypeName="inventory_managementModel1.users">
+        <MappingFragment StoreEntitySet="users">
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="surname" ColumnName="surname" />
+          <ScalarProperty Name="name_user" ColumnName="name_user" />
+          <ScalarProperty Name="middle_name" ColumnName="middle_name" />
+          <ScalarProperty Name="is_admin" ColumnName="is_admin" />
+          <ScalarProperty Name="deleted" ColumnName="deleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="balances" FunctionName="Хранилище inventory_managementModel1.balances">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="inventory_managementModel1.balances_Result">
+          <ScalarProperty Name="article" ColumnName="article" />
+          <ScalarProperty Name="name_product" ColumnName="name_product" />
+          <ScalarProperty Name="count" ColumnName="count" />
+          <ScalarProperty Name="minimum_balance" ColumnName="minimum_balance" />
+          <ScalarProperty Name="ordered" ColumnName="ordered" />
+          <ScalarProperty Name="to_order" ColumnName="to_order" />
+          <ScalarProperty Name="date_of_debiting" ColumnName="date_of_debiting" />
+          <ScalarProperty Name="for_debiting" ColumnName="for_debiting" />
+          <ScalarProperty Name="season" ColumnName="season" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

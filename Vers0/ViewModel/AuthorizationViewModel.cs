@@ -13,10 +13,12 @@ using Vers0.Model;
 
 namespace Vers0.ViewModel
 {
-    public class AuthorizationViewModel: INotifyPropertyChanged
+    public class AuthorizationViewModel : INotifyPropertyChanged
     {
         inventory_managementEntities db = new inventory_managementEntities();
         AuthorizationWindow authorizationWindow;
+
+        public bool authorizationAccess { get; private set; } = false;
 
         private users user;
         public users User
@@ -25,21 +27,14 @@ namespace Vers0.ViewModel
             set
             {
                 user = value;
-                OnPropertyChanged(nameof(User)); // Метод для уведомления об изменении свойства
+                OnPropertyChanged(nameof(User));
             }
         }
-
-        public ObservableCollection<contractor> contractors { get; set; }
-        public ObservableCollection<product> products { get; set; }
-        public ObservableCollection<products_in_order> products_In_Orders { get; set; }
-
-
 
         public AuthorizationViewModel(AuthorizationWindow m)
         {
             authorizationWindow = m;
         }
-        //public AuthorizationViewModel() {}
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")
@@ -56,15 +51,15 @@ namespace Vers0.ViewModel
                 return logInCommand ??
                   (logInCommand = new RelayCommand(obj =>
                   {
-                      // Выполнение функции из базы данных
                       if (db.UserAuthorization(authorizationWindow.login.Text, authorizationWindow.password.Password))
                       {
-                          User = db.users.Find(authorizationWindow.login.Text);                          
+                          User = db.users.Find(authorizationWindow.login.Text);
+                          authorizationAccess = true;
                           authorizationWindow.Close();
                       }
                       else
                       {
-                          MessageBox.Show("Данные введены неверно!");
+                          MessageBox.Show("Данные введены неверно!", "Вход запрещен", MessageBoxButton.OK, MessageBoxImage.Warning);
                           authorizationWindow.login.Text = "";
                           authorizationWindow.password.Password = "";
                       }
@@ -82,7 +77,7 @@ namespace Vers0.ViewModel
                 return exitCommand ??
                   (exitCommand = new RelayCommand(obj =>
                   {
-                      Application.Current.Shutdown(); // Закрыть текущее приложение
+                      Application.Current.Shutdown();
                       System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
                   }));
             }

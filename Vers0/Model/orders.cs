@@ -26,6 +26,7 @@ namespace Vers0.Model
         public string contractor { get; set; }
         public Nullable<double> amount { get; set; }
         public string order_status { get; set; }
+        public bool deleted { get; set; }
     
         public virtual contractor contractor1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

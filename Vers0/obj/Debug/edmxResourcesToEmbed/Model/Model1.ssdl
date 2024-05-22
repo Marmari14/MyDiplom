@@ -11,7 +11,7 @@
     <Property Name="bank" Type="nvarchar" MaxLength="60" Nullable="false" />
     <Property Name="corr_acc" Type="nvarchar" MaxLength="20" Nullable="false" />
     <Property Name="acc" Type="nvarchar" MaxLength="20" Nullable="false" />
-    <Property Name="designation_contractor" Type="nvarchar" MaxLength="30" />
+    <Property Name="designation_contractor" Type="nvarchar" MaxLength="30" Nullable="false" />
     <Property Name="KPP" Type="nvarchar" MaxLength="9" />
     <Property Name="OGRN" Type="nvarchar" MaxLength="13" />
     <Property Name="surname" Type="nvarchar" MaxLength="30" />
@@ -19,6 +19,7 @@
     <Property Name="middle_name" Type="nvarchar" MaxLength="30" />
     <Property Name="date_birth" Type="date" />
     <Property Name="OGRNIP" Type="nvarchar" MaxLength="15" />
+    <Property Name="deleted" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="logs">
     <Key>
@@ -39,6 +40,7 @@
     <Property Name="contractor" Type="nvarchar" MaxLength="12" Nullable="false" />
     <Property Name="amount" Type="float" />
     <Property Name="order_status" Type="nvarchar" MaxLength="11" Nullable="false" />
+    <Property Name="deleted" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="product">
     <Key>
@@ -50,10 +52,11 @@
     <Property Name="unit_of_measurement" Type="nvarchar" MaxLength="3" Nullable="false" />
     <Property Name="sale_price" Type="money" Nullable="false" />
     <Property Name="minimum_balance" Type="int" Nullable="false" />
+    <Property Name="count" Type="int" Nullable="false" />
     <Property Name="description_product" Type="nvarchar" MaxLength="70" />
     <Property Name="Shelf_life" Type="int" />
     <Property Name="season" Type="nvarchar" MaxLength="5" />
-    <Property Name="photo" Type="image" />
+    <Property Name="deleted" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="products_in_order">
     <Key>
@@ -83,6 +86,7 @@
     <Property Name="name_user" Type="nvarchar" MaxLength="30" />
     <Property Name="middle_name" Type="nvarchar" MaxLength="30" />
     <Property Name="is_admin" Type="bit" Nullable="false" />
+    <Property Name="deleted" Type="bit" Nullable="false" />
   </EntityType>
   <Association Name="FK__logs__type_actio__3D5E1FD2">
     <End Role="user_action" Type="Self.user_action" Multiplicity="1" />
@@ -144,9 +148,41 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="balances" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="article" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="name_product" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="count" Type="int" Nullable="false" />
+          <Property Name="minimum_balance" Type="int" Nullable="false" />
+          <Property Name="ordered" Type="int" />
+          <Property Name="to_order" Type="int" />
+          <Property Name="date_of_debiting" Type="date" />
+          <Property Name="for_debiting" Type="int" />
+          <Property Name="season" Type="nvarchar" MaxLength="5" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
   <Function Name="create_password" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar">
     <Parameter Name="username" Type="nvarchar" Mode="In" />
     <Parameter Name="password" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="GetProfitDataForPeriod" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="StartDate" Type="date" Mode="In" />
+    <Parameter Name="EndDate" Type="date" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="name_product" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="article" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="purchase_amount" Type="float" />
+          <Property Name="sale_amount" Type="float" />
+          <Property Name="profit" Type="float" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
   </Function>
   <Function Name="user_authorization" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="bit">
     <Parameter Name="username" Type="nvarchar" Mode="In" />

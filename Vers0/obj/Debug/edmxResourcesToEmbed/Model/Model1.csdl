@@ -1,5 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="inventory_managementModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <ComplexType Name="balances_Result">
+    <Property Name="article" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="name_product" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="count" Type="Int32" Nullable="false" />
+    <Property Name="minimum_balance" Type="Int32" Nullable="false" />
+    <Property Name="ordered" Type="Int32" />
+    <Property Name="to_order" Type="Int32" />
+    <Property Name="date_of_debiting" Type="DateTime" />
+    <Property Name="for_debiting" Type="Int32" />
+    <Property Name="season" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+  </ComplexType>
+  <ComplexType Name="GetProfitDataForPeriod_Result">
+    <Property Name="name_product" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="article" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="purchase_amount" Type="Double" />
+    <Property Name="sale_amount" Type="Double" />
+    <Property Name="profit" Type="Double" />
+  </ComplexType>
   <EntityType Name="contractor">
     <Key>
       <PropertyRef Name="INN" />
@@ -11,7 +29,7 @@
     <Property Name="bank" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="corr_acc" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="acc" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="designation_contractor" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="designation_contractor" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="KPP" Type="String" MaxLength="9" FixedLength="false" Unicode="true" />
     <Property Name="OGRN" Type="String" MaxLength="13" FixedLength="false" Unicode="true" />
     <Property Name="surname" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
@@ -19,6 +37,7 @@
     <Property Name="middle_name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
     <Property Name="date_birth" Type="DateTime" Precision="0" />
     <Property Name="OGRNIP" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="orders" Relationship="Self.FK__orders__contract__2A4B4B5E" FromRole="contractor" ToRole="orders" />
   </EntityType>
   <EntityType Name="logs">
@@ -42,6 +61,7 @@
     <Property Name="contractor" Type="String" MaxLength="12" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="amount" Type="Double" />
     <Property Name="order_status" Type="String" MaxLength="11" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="contractor1" Relationship="Self.FK__orders__contract__2A4B4B5E" FromRole="orders" ToRole="contractor" />
     <NavigationProperty Name="products_in_order" Relationship="Self.FK__products___order__2D27B809" FromRole="orders" ToRole="products_in_order" />
   </EntityType>
@@ -55,10 +75,11 @@
     <Property Name="unit_of_measurement" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="sale_price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
     <Property Name="minimum_balance" Type="Int32" Nullable="false" />
+    <Property Name="count" Type="Int32" Nullable="false" />
     <Property Name="description_product" Type="String" MaxLength="70" FixedLength="false" Unicode="true" />
     <Property Name="Shelf_life" Type="Int32" />
     <Property Name="season" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-    <Property Name="photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="products_in_order" Relationship="Self.FK__products___produ__2E1BDC42" FromRole="product" ToRole="products_in_order" />
   </EntityType>
   <EntityType Name="products_in_order">
@@ -92,6 +113,7 @@
     <Property Name="name_user" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
     <Property Name="middle_name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
     <Property Name="is_admin" Type="Boolean" Nullable="false" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="logs" Relationship="Self.FK__logs__username__3C69FB99" FromRole="users" ToRole="logs" />
   </EntityType>
   <Association Name="FK__orders__contract__2A4B4B5E">
@@ -182,5 +204,10 @@
       <End Role="product" EntitySet="product" />
       <End Role="products_in_order" EntitySet="products_in_order" />
     </AssociationSet>
+    <FunctionImport Name="balances" IsComposable="true" ReturnType="Collection(inventory_managementModel.balances_Result)" />
+    <FunctionImport Name="GetProfitDataForPeriod" IsComposable="true" ReturnType="Collection(inventory_managementModel.GetProfitDataForPeriod_Result)">
+      <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+      <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+    </FunctionImport>
   </EntityContainer>
 </Schema>

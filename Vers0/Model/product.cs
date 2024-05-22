@@ -26,10 +26,11 @@ namespace Vers0.Model
         public string unit_of_measurement { get; set; }
         public decimal sale_price { get; set; }
         public int minimum_balance { get; set; }
+        public int count { get; set; }
         public string description_product { get; set; }
         public Nullable<int> Shelf_life { get; set; }
         public string season { get; set; }
-        public byte[] photo { get; set; }
+        public bool deleted { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<products_in_order> products_in_order { get; set; }
