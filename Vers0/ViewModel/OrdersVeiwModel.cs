@@ -8,11 +8,26 @@ using Vers0.Model;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Windows;
+using Microsoft.Office.Interop.Word;
+using Word = Microsoft.Office.Interop.Word;
+
 
 namespace Vers0.ViewModel
 {
     public class OrdersVeiwModel : INotifyPropertyChanged
     {
+        private readonly contractor mainCompany = new contractor() 
+        { 
+            INN = "5027277873",
+            address_contractor = "Россия,140010, Московская обл., г. Люберцы, ул. Черемухина, д. 24/10, кв. 171",
+            RCBIC = "044525974",
+            bank = "АО «ТИНЬКОФФ БАНК»",
+            corr_acc = "30101810145250000974",
+            acc = "40702810410000550641",
+            designation_contractor = "ООО «СтарТрек»",
+            KPP = "502701001",
+            OGRN = "1195027014577"
+        };
         private RelayCommand deleteCommand;
         private RelayCommand addCommand;
         private RelayCommand addProductCommand;
@@ -293,11 +308,61 @@ namespace Vers0.ViewModel
                 return printCommand ??
                     (printCommand = new RelayCommand(obj =>
                     {
-                        products.Add(newSelectedProduct);
-                        selectedProduct = newSelectedProduct;
-                    },
-                    (obj) => newSelectedProduct != null));
+                        Word.Application word = new Word.Application();
+                        Document doc;
+                        if (order.type == "Поступление")
+                            doc = word.Documents.Add(Environment.CurrentDirectory + "\\Приходная накладная.dotx");
+                        else
+                            doc = word.Documents.Add(Environment.CurrentDirectory + "\\Заказ.dotx");
+                        SetTemplate(doc);
+                        doc.PrintOut();
+                        MessageBox.Show("Готово!");
+                        doc.Close();
+                        word.Quit();
+                    }));
             }
+        }
+
+        private Document SetTemplate(Document doc)
+        {
+            doc.Bookmarks["number"].Range.Text = order.number.ToString();
+            doc.Bookmarks["date"].Range.Text = order.order_date.ToShortDateString();          
+            doc.Bookmarks["amount"].Range.Text = order.amount.ToString();
+            Table tbl = doc.Bookmarks["listProduct"].Range.Tables[1];
+            for (int i = 2; i <= products.Count + 1; i++)
+            {
+                tbl.Cell(i, 1).Range.Text = (i - 1).ToString();
+                tbl.Cell(i, 2).Range.Text = products[i - 2].name_product;
+                tbl.Cell(i, 3).Range.Text = products[i - 2].price_product.ToString();
+                tbl.Cell(i, 4).Range.Text = products[i - 2].count_product.ToString();
+                tbl.Cell(i, 5).Range.Text = products[i - 2].cost_product.ToString();
+                if (i != products.Count + 1)
+                    tbl.Rows.Add();
+            }
+            if (order.type == "Заказ_поставщику")
+            {
+                doc.Bookmarks["senderName"].Range.Text = order.contractor.name_c;
+                using (inventory_managementEntities db = new inventory_managementEntities())
+                {
+                    doc.Bookmarks["senderAddress"].Range.Text = db.contractor.Find(order.contractor.inn_c).address_contractor;
+                }
+                doc.Bookmarks["costumer"].Range.Text = mainCompany.designation_contractor;
+            }
+            else if (order.type == "Заказ_покупателя")
+            {
+                doc.Bookmarks["senderAddress"].Range.Text = mainCompany.address_contractor;
+                doc.Bookmarks["senderName"].Range.Text = mainCompany.designation_contractor;
+                doc.Bookmarks["costumer"].Range.Text = order.contractor.name_c;
+            }
+            else if (order.type == "Поступление")
+            {
+                using (inventory_managementEntities db = new inventory_managementEntities())
+                {
+                    doc.Bookmarks["costumer"].Range.Text = order.contractor.name_c +", "+  db.contractor.Find(order.contractor.inn_c).address_contractor + ", ИНН " +order.contractor.inn_c;
+                }
+                doc.Bookmarks["buyer"].Range.Text = mainCompany.designation_contractor + ", " + mainCompany.address_contractor + ", ИНН " + mainCompany.INN;
+            }
+            return doc;
         }
     }
 }

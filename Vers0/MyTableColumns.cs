@@ -63,10 +63,12 @@ namespace Vers0
             column = new DataGridTextColumn();
             column.Header = "Дата";
             column.Binding = new Binding("order_date");
+            column.Binding.StringFormat = "dd.MM.yyyy";
             columns.Add(column);
             column = new DataGridTextColumn();
             column.Header = "Контрагент";
             column.Binding = new Binding("contractor.name_c");
+            column.Binding.StringFormat = "";
             columns.Add(column);
             column = new DataGridTextColumn();
             column.Header = "Сумма";

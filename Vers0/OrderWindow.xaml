@@ -10,6 +10,7 @@
         <local:AppProperties x:Key="AppProperties"/>
     </Window.Resources>
     <Grid>
+        <Button Content="Печать" Width="60" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="10" Command="{Binding PrintCommand}"></Button>
         <TextBlock  Text="{Binding windowTitle}" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 10"></TextBlock>
         <GroupBox x:Name="orderInfo" Width="auto" Height="100" VerticalAlignment="Top" Header="Заказ" Margin="10 40" >
             <Grid>

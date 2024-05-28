@@ -50,7 +50,7 @@ namespace Vers0
         public MainWindow()
         {
             AuthorizationWindow authorizationWindow = new AuthorizationWindow();
-            authorizationWindow.ShowDialog();
+           authorizationWindow.ShowDialog();
             DataContext = authorizationWindow.DataContext;
             if ((DataContext as AuthorizationViewModel).authorizationAccess == false) Close();
             InitializeComponent();
