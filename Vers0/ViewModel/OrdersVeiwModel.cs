@@ -315,10 +315,9 @@ namespace Vers0.ViewModel
                         else
                             doc = word.Documents.Add(Environment.CurrentDirectory + "\\Заказ.dotx");
                         SetTemplate(doc);
-                        doc.PrintOut();
-                        MessageBox.Show("Готово!");
-                        doc.Close();
-                        word.Quit();
+
+                        doc.SaveAs2(Environment.CurrentDirectory + "\\Печать.docx");
+                        word.Documents.Open(Environment.CurrentDirectory + "\\Печать.docx");
                     }));
             }
         }

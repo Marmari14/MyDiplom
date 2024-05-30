@@ -154,8 +154,9 @@ namespace Vers0.ViewModel
                     {
                         try
                         {
-                            db.users.Remove(user);
                             users.Remove(user);
+                            db.users.Attach(user);
+                            db.users.Remove(user);
                         }
                         catch { return false; }
                     }
@@ -164,8 +165,9 @@ namespace Vers0.ViewModel
                         try
                         {
                             orders o = db.orders.Find(ordersD.number);
-                            db.orders.Remove(o);
                             orders.Remove(ordersD);
+                            db.orders.Attach(o);
+                            db.orders.Remove(o);
                         }
                         catch { return false; }
                     }
@@ -173,6 +175,7 @@ namespace Vers0.ViewModel
                     {
                         try
                         {
+                            db.product.Attach(product);
                             db.product.Remove(product);
                             products.Remove(product);
                         }
@@ -182,8 +185,9 @@ namespace Vers0.ViewModel
                     {
                         try
                         {
-                            db.contractor.Remove(c);
                             contractors.Remove(c);
+                            db.contractor.Attach(c);
+                            db.contractor.Remove(c);
                         }
                         catch { return false; }
                     }

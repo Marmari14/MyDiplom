@@ -216,7 +216,8 @@ namespace Vers0
 
         private void deleteBtn_Click(object sender, RoutedEventArgs e)
         {
-            table.delete(MainTable.SelectedItem);
+           if( table.delete(MainTable.SelectedItem))
+                MessageBox.Show("Запись удалена!", "Удаление", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void createBtn_Click(object sender, RoutedEventArgs e)
@@ -406,7 +407,7 @@ namespace Vers0
             }
             catch
             {
-                MessageBox.Show("Не все обязательные поля заполнены!", namePanel.Content.ToString());
+                MessageBox.Show("Не все обязательные поля заполнены!", namePanel1.Content.ToString());
                 return;
             }
 
@@ -416,14 +417,14 @@ namespace Vers0
                 {
                     if (table.create(c))
                     {
-                        MessageBox.Show("Контрагент добавлен!", namePanel.Content.ToString());
+                        MessageBox.Show("Контрагент добавлен!", namePanel1.Content.ToString());
                     }
                 }
                 else if (namePanel1.Content.ToString() == "Редактирование контрагента")
                 {
                     if (table.edit(c))
                     {
-                        MessageBox.Show("Контрагент изменен!", namePanel.Content.ToString());
+                        MessageBox.Show("Контрагент изменен!", namePanel1.Content.ToString());
                     }
                 }
                 closeContractorPanel_Click(sender, e);
